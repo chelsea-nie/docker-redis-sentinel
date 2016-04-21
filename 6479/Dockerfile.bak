@@ -1,0 +1,26 @@
+FROM docker.io/centos 
+
+MAINTAINER nie 
+
+#RUN addgroup -S redis && adduser -S -G redis redis
+RUN useradd -s /sbin/login redis && yum -y install git
+
+## -- installation --
+
+RUN git clone -b 3.0.7 https://github.com/antirez/redis.git
+
+## Build redis from source
+RUN (cd /redis && make && make install)
+
+## redis.conf
+ADD ./6479/redis.conf /etc/redis.conf
+
+RUN mkdir /data && chown redis:redis /data
+VOLUME /data
+WORKDIR /data
+
+ADD docker-entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
+EXPOSE 6479
+CMD [ "redis-server", "/etc/redis.conf" ]
