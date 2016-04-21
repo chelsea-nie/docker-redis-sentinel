@@ -1,1 +1,3 @@
 # docker-redis-sentinel
+## Introduction:
+Redis Sentinel .....
