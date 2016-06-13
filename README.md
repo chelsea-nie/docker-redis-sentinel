@@ -6,3 +6,5 @@ Redis Sentinel .....
 master: 6479
 slave: 6579
 sentinel: 26479
+
+### this is not password
